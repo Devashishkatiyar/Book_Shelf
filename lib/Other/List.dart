@@ -1,17 +1,21 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 class Popular{
   Popular({
     this.about,
     this.price,
     this.rating,
     this.tittle,
-
   });
+  
   int price;
   double rating;
   String tittle;
   String about;
 }
-List<Popular>popularlist = <Popular>[
+
+List<Popular> popularlist = <Popular>[
   Popular(price: 220,tittle: "Compiler Designing",about: "This Book is mainly about the the different techniques",rating: 3.4),
   Popular(price: 340,tittle: "Basic Electronics",about: "This Book is mainly about the the different techniques",rating: 4.4),
   Popular(price: 290,tittle: "Operating Systems",about: "",rating: 4.3),
@@ -23,6 +27,8 @@ List<Popular>popularlist = <Popular>[
   Popular(price: 221,tittle: "Engineering Mathematics",about: "",rating: 2.8),
   Popular(price: 260,tittle: "COI",about: "This Book is mainly about the the different techniques",rating: 3.9),
 ];
+
+
 class Recommended{
   Recommended({
     this.about,
@@ -72,3 +78,40 @@ List<NewReleases>NewReleaseslist = <NewReleases>[
   NewReleases(price: 221,tittle: "New Release 9",about: "This Book is mainly about the the different techniques",rating: 3.4),
   NewReleases(price: 260,tittle: "New Release 10",about: "This Book is mainly about the the different techniques",rating: 3.4),
 ];
+
+class Section{
+  IconData icon;
+  String s;
+  Section({this.icon,this.s});
+}
+
+List<Section>verticalList=<Section>[
+  Section(
+    icon: Icons.school,
+    s: "Education"
+  ),
+  Section(
+    icon: Icons.book,
+    s: "Literature",
+  ),
+  Section(
+    icon: Icons.wb_sunny_rounded,
+    s: "Science",
+  ),
+  Section(
+    icon: Icons.book_outlined,
+    s: "Fiction",
+  ),
+];
+// class Book{
+//   Book({this.about,
+//   this.price,
+//   this.rating,
+//   this.tittle,
+// });
+// int price;
+// String about;
+// double rating;
+// String tittle;
+// }
+

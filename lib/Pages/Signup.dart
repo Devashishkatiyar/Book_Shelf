@@ -1,9 +1,9 @@
 import 'package:book_management/Class/UserDetails.dart';
 import 'package:book_management/Other/AuthenticationFunctions.dart';
+import 'package:book_management/Other/Loader.dart';
 import 'package:book_management/Pages/Functions.dart';
 import 'package:book_management/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class SignUp extends StatefulWidget{
@@ -60,7 +60,7 @@ class SignUpState extends State<SignUp>{
                         }
                         return null;
                       },
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
+                      style: TextStyle(fontSize: 16),
                       decoration: inputDecoration(hintText: "Email"),
                     ),
                   ),
@@ -87,7 +87,7 @@ class SignUpState extends State<SignUp>{
                         }
                         return null;
                       },
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
+                      style: TextStyle(fontSize: 16),
                       decoration: inputDecoration(hintText: "Name"),
                     ),
                   ),
@@ -117,7 +117,7 @@ class SignUpState extends State<SignUp>{
                         // }
                         return null;
                       },
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
+                      style: TextStyle(fontSize: 16),
                       decoration: inputDecoration(hintText: "Phone Number"),
                       keyboardType: TextInputType.phone,
                     ),
@@ -135,34 +135,10 @@ class SignUpState extends State<SignUp>{
                     padding: EdgeInsets.only(top: 1),
                     child: TextFormField(
                       cursorColor: Color(0xFF42210B),
-                      validator: (value){
-                        if(value == null){
-                          return "No text has been entered";
-                        }
-                        return null;
-                      },
-                      onChanged: (String value){
-                      },
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
-                      decoration: inputDecoration(hintText: "Genre"),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30,),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xFFC69C6D),
-                      borderRadius: BorderRadius.circular(65.0)
-                  ),
-                  width: 325,
-                  height: 58,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 1),
-                    child: TextFormField(
-                      cursorColor: Color(0xFF42210B),
                       controller: passwordController,
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
+                      style: TextStyle(fontSize: 16),
                       decoration: inputDecoration(hintText: "Password"),
+                      obscureText: true,
                       validator: (value){
                         if(value ==null){
                           return "No text has been entered";
@@ -191,8 +167,9 @@ class SignUpState extends State<SignUp>{
                     child: TextFormField(
                       cursorColor: Color(0xFF42210B),
                       controller: confirmController,
-                      style: TextStyle(fontSize: 16,fontFamily:"Avenir LT Std 45 Book"),
+                      style: TextStyle(fontSize: 16),
                       decoration: inputDecoration(hintText: "Confirm Password"),
+                      obscureText: true,
                       validator: (String value){
                         print(passwordController.text + "  2: " + value);
                         if(passwordController.text != value){
@@ -226,26 +203,23 @@ class SignUpState extends State<SignUp>{
                         setState(() {
                           loading= true;
                         });
+                        if(loading==true)showDialog(
+                          context: context,
+                          builder: (BuildContext context)=>BookShelfLoader(),
+                        );
                         userDetails = UserDetails(userName: userName, userPhone: userPhone, email: email, password: password);
                         check = await userSignUp(userDetails);
                       }
                       if(check) {
                         Navigator.pop(context);
-                        Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => Login())).then((value){
-                          Fluttertoast.showToast(
-                            msg: "Now Login Using Your Credentials",
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.orange,
-                            textColor: Colors.white,
-                          );
-                        });
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login()));
                       }
                       setState(() {
                         loading = false;
                       });
                     },
-                    child: loading? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFC69C6D)),):Text("SIGNUP",
+                    child:Text("SIGNUP",
                       style: TextStyle(fontSize: 21,fontFamily: "Myriad"),
                     ),
                   ),
