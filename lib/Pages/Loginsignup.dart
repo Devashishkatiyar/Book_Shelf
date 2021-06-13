@@ -1,6 +1,9 @@
+import 'package:book_management/Other/AuthenticationFunctions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:book_management/Pages/Signup.dart';
+import 'package:book_management/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'Signup.dart';
-import 'login.dart';
+
 class LoginSignUp extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -8,6 +11,49 @@ class LoginSignUp extends StatefulWidget{
   }
 }
 class LoginSignUpState extends State<LoginSignUp>{
+  
+  
+  static Future<dynamic> backgroundMessage(Map<String, dynamic> message) async{
+    print("background");
+    if (message.containsKey('data')) {
+      final dynamic data = message['data'];
+    }
+    
+    if (message.containsKey('notification')) {
+      final dynamic notification = message['notification'];
+    }
+    return Future<void>.value();
+  }
+  
+  message() async{
+    print("called");
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+    firebaseMessaging.configure(
+      onMessage: (Map<String,dynamic> message) async{
+        print("on Message" + message.toString());
+        for(var v in message.values){
+        }
+        
+      },
+      onBackgroundMessage:backgroundMessage,
+      onLaunch: (Map<String,dynamic> message) async{
+        print("on Launch" + message.toString());
+      },
+      onResume: (Map<String,dynamic> message) async{
+        print("on Resume" + message.toString());
+      },
+    );
+//    firebaseMessaging.requestNotificationPermissions();
+    print("completed");
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+    message();
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +89,7 @@ class LoginSignUpState extends State<LoginSignUp>{
                 child: FlatButton(
                   textColor: Color(0xFFEA8C1F),
                   onPressed: () {
+                    
                     Navigator.push(context,MaterialPageRoute(builder: (context) => Login()));
                   },
                   child: Text("LOGIN",
